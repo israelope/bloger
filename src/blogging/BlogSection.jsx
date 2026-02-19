@@ -1,13 +1,17 @@
 import { useState, useEffect } from "react";
 import BlogCard from "./BlogCard";
+import blogPosts from "./data";
 
 const BlogSection = () => {
-
   const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
     const storedBlogs = JSON.parse(localStorage.getItem("blogs")) || [];
-    setBlogs(storedBlogs);
+
+    // Merge static + admin blogs
+    const combinedBlogs = [...blogPosts, ...storedBlogs];
+
+    setBlogs(combinedBlogs);
   }, []);
 
   return (

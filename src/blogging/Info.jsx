@@ -1,23 +1,33 @@
 import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import blogPosts from "./data";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
 const Info = () => {
   const { id } = useParams();
-  const blogIndex = blogPosts.findIndex((post) => post.id === Number(id));
-  const blog = blogPosts[blogIndex];
+  const [blogs, setBlogs] = useState([]);
+
+  useEffect(() => {
+    const storedBlogs = JSON.parse(localStorage.getItem("blogs")) || [];
+
+    const combinedBlogs = [...blogPosts, ...storedBlogs];
+
+    setBlogs(combinedBlogs);
+  }, []);
+
+  const blogIndex = blogs.findIndex((post) => post.id == id);
+  const blog = blogs[blogIndex];
 
   if (!blog) return <div>Not found</div>;
 
-  const prevBlog = blogPosts[blogIndex - 1];
-  const nextBlog = blogPosts[blogIndex + 1];
+  const prevBlog = blogs[blogIndex - 1];
+  const nextBlog = blogs[blogIndex + 1];
 
   return (
     <>
       <Navbar />
 
-      {/* Header Section */}
       <div className="text-center max-w-3xl mx-auto px-6 py-10">
         <p className="text-gray-500">
           {blog.author} • {blog.date}
@@ -25,7 +35,6 @@ const Info = () => {
         <h1 className="text-5xl font-serif mt-4">{blog.title}</h1>
       </div>
 
-      {/* Full Width Main Image */}
       <div className="w-full">
         <img
           src={blog.mainImage}
@@ -34,7 +43,6 @@ const Info = () => {
         />
       </div>
 
-      {/* Blog Content */}
       <div className="max-w-3xl mx-auto px-6 py-10 space-y-8">
         {blog.subTitle && (
           <h2 className="text-2xl font-serif text-gray-700 text-center">
@@ -42,7 +50,7 @@ const Info = () => {
           </h2>
         )}
 
-        {blog.sections.map((section, index) => {
+        {blog.sections?.map((section, index) => {
           if (section.type === "paragraph") {
             return (
               <p key={index} className="text-lg leading-8">
@@ -64,7 +72,6 @@ const Info = () => {
         })}
       </div>
 
-      {/* Previous / Next Bar */}
       <div className="border-t py-10 px-6">
         <div className="max-w-6xl mx-auto flex justify-between">
           {prevBlog ? (
