@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-const BlogCard = ({ id, category, date, title, description, imageUrl }) => {
+const BlogCard = ({ id, category, date, title, description, imageUrl, mainImage }) => {
   const navigate = useNavigate();
 
   return (
@@ -9,7 +9,7 @@ const BlogCard = ({ id, category, date, title, description, imageUrl }) => {
       {/* Image Section */}
       <div className="relative h-64 w-full">
         <img 
-          src={imageUrl} 
+          src={imageUrl || mainImage} 
           alt={title} 
           className="object-cover w-full h-full"
         />
