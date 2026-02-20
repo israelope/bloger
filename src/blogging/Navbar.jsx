@@ -5,7 +5,7 @@ const Navbar = () => {
     <main className='p-10'>
         <div className='flex justify-between'>
             <div className='flex gap-3'>
-                <h1 className='font-black'>Amanda</h1>
+                <a href="/"><h1 className='font-black'>Amanda</h1></a>
                 <p>a freelance blog writer</p>
             </div>
             <div className='gap-10 flex'>
