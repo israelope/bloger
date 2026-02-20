@@ -1,40 +1,54 @@
 import { useNavigate } from "react-router-dom";
 
-const BlogCard = ({ id, category, date, title, description, imageUrl, }) => {
+const BlogCard = ({ id, category, date, title, description, imageUrl, mainImage }) => {
   const navigate = useNavigate();
 
+  // PocketBase data uses 'imageUrl' while your static data uses 'mainImage'
+  // This fallback ensures images load regardless of the source
+  const displayImage = imageUrl || mainImage;
+
   return (
-    <div className="max-w-sm overflow-hidden bg-white">
+    // Removed max-w-sm so the card fills the responsive grid column
+    <div className="w-full overflow-hidden bg-white flex flex-col h-full border-b md:border-none pb-8 md:pb-0">
       
-      {/* Image Section */}
-      <div className="relative h-64 w-full">
+      {/* Image Section - Scaled for different devices */}
+      <div 
+        className="relative h-56 sm:h-64 lg:h-72 w-full cursor-pointer overflow-hidden group"
+        onClick={() => navigate(`/blog/${id}`)}
+      >
         <img 
-          src={imageUrl } 
+          src={displayImage || "https://via.placeholder.com/400x300?text=No+Image"} 
           alt={title} 
-          className="object-cover w-full h-full"
+          className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
         />
+        {/* Mobile Category Tag Overlay */}
+        <div className="absolute top-4 left-4 md:hidden bg-white px-3 py-1 text-[10px] font-bold tracking-widest">
+          {category}
+        </div>
       </div>
 
       {/* Content Section */}
-      <div className="py-6">
-        <p className="text-xs font-bold tracking-widest uppercase text-gray-500">
+      <div className="py-6 flex-grow flex flex-col">
+        <p className="hidden md:block text-xs font-bold tracking-widest uppercase text-gray-400">
           IN <span className="text-black">{category}</span> ON {date}
         </p>
         
-        <h2 className="mt-4 text-3xl font-serif leading-tight text-gray-900">
+        <h2 className="mt-2 md:mt-4 text-2xl md:text-3xl font-serif leading-tight text-gray-900 line-clamp-2">
           {title}
         </h2>
         
-        <p className="mt-4 text-gray-600 line-clamp-3">
+        <p className="mt-4 text-gray-600 line-clamp-3 text-sm md:text-base flex-grow">
           {description}
         </p>
 
-        <button
-          onClick={() => navigate(`/blog/${id}`)}
-          className="mt-8 px-8 py-3 border border-black rounded-full text-sm font-medium hover:bg-black hover:text-white transition-colors"
-        >
-          Read more
-        </button>
+        <div className="mt-6 md:mt-8">
+          <button
+            onClick={() => navigate(`/blog/${id}`)}
+            className="w-full md:w-auto px-8 py-3 border border-black rounded-full text-xs md:text-sm font-medium hover:bg-black hover:text-white transition-all duration-300"
+          >
+            Read more
+          </button>
+        </div>
       </div>
     </div>
   );

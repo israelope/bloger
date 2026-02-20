@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import PocketBase from 'pocketbase';
 import BlogCard from "./BlogCard";
-import blogPosts from "./data"; // Your existing static posts
+import blogPosts from "./data"; 
 
 const pb = new PocketBase('https://itrain.services.hodessy.com');
 
@@ -11,17 +11,12 @@ const BlogSection = () => {
   useEffect(() => {
     const fetchCloudBlogs = async () => {
       try {
-        // Fetch all records from 'Bloger', newest first
         const records = await pb.collection('Bloger').getFullList({
           sort: '-created',
         });
-        
-        // Merge static posts with cloud posts
-        // Cloud posts will appear at the top
         setBlogs([...records, ...blogPosts]);
       } catch (error) {
         console.error("Error fetching blogs:", error);
-        // Fallback to static data if the cloud fetch fails
         setBlogs(blogPosts);
       }
     };
@@ -30,12 +25,17 @@ const BlogSection = () => {
   }, []);
 
   return (
-    <section className="container mx-auto px-32 py-5">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    // Replaced px-32 with responsive padding: 
+    // px-6 on mobile, px-12 on tablets, and px-20 on large screens
+    <section className="container mx-auto px-6 md:px-12 lg:px-20 py-10">
+      
+      {/* Grid: 1 column on mobile, 2 on tablets, 3 on desktops */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-8">
         {blogs.map((post) => (
           <BlogCard key={post.id} {...post} />
         ))}
       </div>
+      
     </section>
   );
 };
