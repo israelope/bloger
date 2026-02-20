@@ -25,11 +25,9 @@ const BlogSection = () => {
   }, []);
 
   return (
-    // Replaced px-32 with responsive padding: 
-    // px-6 on mobile, px-12 on tablets, and px-20 on large screens
+
     <section className="container mx-auto px-6 md:px-12 lg:px-20 py-10">
-      
-      {/* Grid: 1 column on mobile, 2 on tablets, 3 on desktops */}
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-8">
         {blogs.map((post) => (
           <BlogCard key={post.id} {...post} />

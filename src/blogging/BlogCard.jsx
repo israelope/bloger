@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 const BlogCard = ({ id, category, date, title, description, imageUrl, mainImage }) => {
   const navigate = useNavigate();
 
-  // PocketBase data uses 'imageUrl' while your static data uses 'mainImage'
-  // This fallback ensures images load regardless of the source
   const displayImage = imageUrl || mainImage;
 
   return (
