@@ -6,7 +6,7 @@ const BlogCard = ({ id, category, date, title, description, imageUrl, mainImage 
   const displayImage = imageUrl || mainImage;
 
   return (
-    // Removed max-w-sm so the card fills the responsive grid column
+
     <div className="w-full overflow-hidden bg-white flex flex-col h-full border-b md:border-none pb-8 md:pb-0">
       
       {/* Image Section - Scaled for different devices */}
@@ -26,7 +26,7 @@ const BlogCard = ({ id, category, date, title, description, imageUrl, mainImage 
       </div>
 
       {/* Content Section */}
-      <div className="py-6 flex-grow flex flex-col">
+      <div className="py-6 grow flex flex-col">
         <p className="hidden md:block text-xs font-bold tracking-widest uppercase text-gray-400">
           IN <span className="text-black">{category}</span> ON {date}
         </p>
@@ -35,7 +35,7 @@ const BlogCard = ({ id, category, date, title, description, imageUrl, mainImage 
           {title}
         </h2>
         
-        <p className="mt-4 text-gray-600 line-clamp-3 text-sm md:text-base flex-grow">
+        <p className="mt-4 text-gray-600 line-clamp-3 text-sm md:text-base grow">
           {description}
         </p>
 
