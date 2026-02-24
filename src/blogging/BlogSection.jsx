@@ -20,7 +20,7 @@ const BlogSection = () => {
         });
 
         // combine cloud + local blogs if needed
-        setBlogs([...result.items, ...blogPosts]);
+        setBlogs([...result.items]);
 
         setTotalPages(result.totalPages);
 
